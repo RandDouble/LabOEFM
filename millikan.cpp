@@ -67,7 +67,7 @@ void Print(vector<double> Data, const char* nameVett){
 int ki(double Data, double q){
     //cout<<"ki pre-floor, Qi : "<<Data<<"\tq : "<<q<<"\tValue ki : "<<((Data/q)+0.5)<<std::endl;
     //per debugging kix
-    int kix=floor(((Data/q)+0.5));
+    int kix=round((Data/q));
     return (kix<1)? 1 : kix;
 }
 
