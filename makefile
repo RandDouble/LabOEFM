@@ -1,6 +1,7 @@
 LIBS:= `root-config --libs`
 INCS:= `root-config --cflags` 
 
+compile: millikan.exe angleCorrect.exe
 #PART OF MAKEFILE USED FOR MILLIKAN EXPERIMENT
 millikan: millikan.exe
 #	rm log.log
