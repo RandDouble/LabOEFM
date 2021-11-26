@@ -66,7 +66,7 @@ class Angle{
 //            cout<<"preSottrazione sub is :"<<sub.getAngle()<<"\t Radians : "<<sub.getRad()<<endl;
 //            cout<<"preSottrazione res is :"<<res.getAngle()<<"\t Radians : "<<res.getRad()<<endl;
             res.m_rad=m_rad-sub.getRad();
-            cout<<"Sottrazione risultato : "<<res.getAngle()<<endl;
+//            cout<<"Sottrazione risultato : "<<res.getAngle()<<endl;
             return res;
         }
         void operator=(Angle& ang){
@@ -79,24 +79,25 @@ class Angle{
         Angle operator+(const Angle sub){
             Angle res((*this));
             res.m_rad+=sub.getRad();
-            cout<<"Somma risultato : "<<res.getAngle()<<endl;
+//            cout<<"Somma risultato : "<<res.getAngle()<<endl;
             return res;
         }
         Angle operator/(double num){
             Angle res((*this));
             res.m_rad/=num;
-            cout<<"Divisione risultato : "<<res.getAngle()<<endl;
+//            cout<<"Divisione risultato : "<<res.getAngle()<<endl;
             return res;            
         }
         Angle operator*(double num){
             Angle res((*this));
             res.m_rad*=num;
-            cout<<"Prodotto risultato : "<<res.getAngle()<<endl;
+//            cout<<"Prodotto risultato : "<<res.getAngle()<<endl;
             return res;
         }
 };
 
 Angle Correction(Angle first, Angle second);
+Angle PrecisionCorrection(Angle first, Angle second);
 
 int main(int argc, char** argv){
     
@@ -113,6 +114,7 @@ int main(int argc, char** argv){
         <<"acquired second angle : "<<second.getAngle()<<endl;
     Angle corrected=Correction(first, second);
     cout<<"Corrected Angle : "<<corrected.getAngle()<<endl;
+    cout<<"Precision Correction Angle : "<<PrecisionCorrection(first, second).getAngle()<<endl;
 
     return 0;
 }
@@ -124,4 +126,14 @@ Angle Correction(Angle first, Angle second){
     theta=(first+second)/2.f;
     Angle correct(alpha*(cos(theta.getRad())/(1-cos(theta.getRad()))));
     return correct;
+}
+
+Angle PrecisionCorrection(Angle first, Angle second){
+    Angle alpha, theta;
+    alpha=(second-first)/2.f;
+    theta=(first+second)/2.f;
+    double tanb=(sin(alpha.getRad())*cos(theta.getRad()))/(1-cos(theta.getRad()*cos(alpha.getRad())));
+    double beta=atan(tanb);
+    Angle Beta(beta);
+    return Beta;
 }

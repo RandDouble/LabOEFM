@@ -14,7 +14,7 @@ millikan.exe: millikan.cpp
 #	g++ -o millikan.exe millikan.cpp ${LIBS} ${INCS}
 #PART OF MAKEFILE USED FOR ANGLE CORRECTIOKN
 angle: angleCorrect.exe
-	./angleCorrect.exe 20 51 30 40
+	./angleCorrect.exe 31 11 29 57
 angleCorrect.exe: angleCorrection.cpp
 	g++ -o angleCorrect.exe angleCorrection.cpp 
 
