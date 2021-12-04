@@ -74,8 +74,7 @@ class Angle{
         }
         void operator=(Angle&& ang ){
             m_rad=ang.m_rad;
-            ang.m_rad=0;
-        }
+            ang.m_rad=0;}
         Angle operator+(const Angle sub){
             Angle res((*this));
             res.m_rad+=sub.getRad();
