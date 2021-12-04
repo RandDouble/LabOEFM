@@ -31,14 +31,15 @@ int main(int argc, char**argv){
     Print(SQ, "S(q)");
    
     //Iniziamo a ROOTare
-//    TCanvas *c1= new TCanvas("mygraph");
+    TCanvas c1("mygraph", "parabola", 1000, 500);
+    c1.cd();
     //creazione vettori dinamici per ROOTto
     TGraph* graph= new TGraph();
     for (int i=0; i<DIM; ++i ){
         graph->SetPoint(i, vettq[i], SQ[i]);
     }
     graph->Draw("AL*");
-    
+    c1.SaveAs("parabola.png");
     app.Run();
 
 
