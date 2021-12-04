@@ -38,8 +38,8 @@ int main(int argc, char**argv){
     for (int i=0; i<DIM; ++i ){
         graph->SetPoint(i, vettq[i], SQ[i]);
     }
-    graph->Draw("AL*");
     c1.SaveAs("parabola.png");
+    graph->Draw("AL*");
     app.Run();
 
 
