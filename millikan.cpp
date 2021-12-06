@@ -19,6 +19,9 @@ int ki(double Data, double q);
 vector<double> Sq(vector<double> Data, vector<double> v, int nsteps);
 vector<double> arrayq(double qmin, double qmax, int nsteps);
 double minimum(vector<double> Data);
+double singleSq(vector<double> Data, double q);
+double error(double Sq, int n);
+
 TApplication app("App",NULL,NULL);
 
 int main(int argc, char**argv){
@@ -31,7 +34,10 @@ int main(int argc, char**argv){
 //    Print(vettq, "Vettq");
 //    Print(SQ, "S(q)");
     double min=minimum(Data);
-    cout<<"Valore di minimo della Funzione : "<<std::scientific<<min<<endl;
+    double err=error(singleSq(Data, min), Data.size());
+    cout<<"Valore di minimo della Funzione : "<<std::scientific<<min
+        <<endl<<"Errore nel minimo : "<<err<<endl;
+
     //Iniziamo a ROOTare
     TCanvas c1("mygraph", "parabola", 1000, 500);
     c1.cd();
@@ -93,6 +99,16 @@ vector<double> Sq(vector<double> Data, vector<double> q, int nsteps){
     return Sq;
 }
 
+double singleSq(vector<double> Data, double q){
+    double appo=0; //variabile di appoggio
+    //ciclo di caricamento iniziale dei S(q) 
+    for(double x : Data){
+        //cout<<"Valore ki : "<<ki(x,v[i])<<endl;
+        appo+=pow((x/static_cast<double>(ki(x,q)))-q,2);
+    }
+    return appo;
+}
+
 vector<double> arrayq(double qmin, double qmax, int nsteps){
     vector<double> v(nsteps);
     double passo = (qmax-qmin)/nsteps;
@@ -109,4 +125,9 @@ double minimum(vector<double> data){
         min += x/static_cast<double>(ki(x, 1.6021e-19));
     }
     return min/data.size();
+}
+
+double error(double Sq, int n){
+    double sigma=sqrt(Sq/static_cast<double>((n*(n-1))));
+    return sigma;
 }
