@@ -6,8 +6,8 @@ compile: millikan.exe angleCorrect.exe
 #PART OF MAKEFILE USED FOR MILLIKAN EXPERIMENT
 millikan: millikan.exe
 #	rm log.log
-	./millikan.exe dataRealProva.dat 
-#>>log.log
+#	./millikan.exe dataRealProva.dat 
+	./millikan.exe data.dat >>log.log
 
 millikan.exe: millikan.cpp
 	g++ -o $@ $^ ${LIBS} ${INCS} ${CFLAGS}
