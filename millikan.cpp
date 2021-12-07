@@ -14,7 +14,7 @@
 
 using namespace std;
 
-#define DIM 500 //definizione numero di punti usati
+#define DIM 750 //definizione numero di punti usati
 
 vector<double> Read(const char* filename);
 void Print(vector<double> Data, const char* nameVett);
