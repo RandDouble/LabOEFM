@@ -60,6 +60,7 @@ int main(int argc, char**argv){
     cout<<"Valore di minimo della funzione Fittata : "<<f1->GetMinimumX(1.4e-19, 1.7e-19)<<endl;
     f1->Draw("ALP");
     graph->Draw();
+    graph->SetTitle("Grafico S(q) con fit della parabola");
     graph->GetXaxis()->SetTitle("Q [C]");
     graph->GetYaxis()->SetTitle("S(Q) [C^2]");
     c1.SaveAs("parabola.png");
