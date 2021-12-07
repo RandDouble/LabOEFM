@@ -3,11 +3,14 @@
 #include <cmath>
 #include <vector>
 #include <iomanip>
+#include <cfloat>
 //librerie stronze ROOT
 #include "TGraph.h"
 #include "TApplication.h"
 #include "TCanvas.h"
 #include "TAxis.h"
+#include "TF1.h"
+#include "TLegend.h"
 
 using namespace std;
 
@@ -18,7 +21,8 @@ void Print(vector<double> Data, const char* nameVett);
 int ki(double Data, double q);
 vector<double> Sq(vector<double> Data, vector<double> v, int nsteps);
 vector<double> arrayq(double qmin, double qmax, int nsteps);
-double minimum(vector<double> Data);
+double searchMin(vector<double> Sq, vector<double> vettq);
+double minimum(vector<double> Data, double search);
 double singleSq(vector<double> Data, double q);
 double error(double Sq, int n);
 
@@ -33,7 +37,9 @@ int main(int argc, char**argv){
     Print(Data, "Data");
 //    Print(vettq, "Vettq");
 //    Print(SQ, "S(q)");
-    double min=minimum(Data);
+    double searchMini=searchMin(SQ, vettq);
+    double min=minimum(Data, searchMini);
+    double sqMinimum= singleSq(Data, min);
     double err=error(singleSq(Data, min), Data.size());
     cout<<"Valore di minimo della Funzione : "<<std::scientific<<min
         <<endl<<"Errore nel minimo : "<<err<<endl;
@@ -43,15 +49,23 @@ int main(int argc, char**argv){
     c1.cd();
     //creazione vettori dinamici per ROOTto
     TGraph* graph= new TGraph();
+    TF1* f1= new TF1("f1","[1]*(x-[0])^2+[2]", 1.55e-19, 1.65e-19);
+    f1->SetParameter(2, sqMinimum);
+    f1->SetParameter(0, min);
     for (int i=0; i<DIM; ++i ){
         graph->SetPoint(i, vettq[i], SQ[i]);
     }
-    graph->Draw("ALP");
+    graph->Fit(f1);
+    cout<<"Valore del Chi Quadro del Fit : "<<f1->GetChisquare()<<endl;
+    cout<<"Valore di minimo della funzione Fittata : "<<f1->GetMinimumX(1.4e-19, 1.7e-19)<<endl;
+    f1->Draw("ALP");
+    graph->Draw();
     graph->GetXaxis()->SetTitle("Q [C]");
     graph->GetYaxis()->SetTitle("S(Q) [C^2]");
     c1.SaveAs("parabola.png");
     app.Run();
-
+    delete [] graph;
+    delete [] f1;
 
     return 0;
 }
@@ -119,10 +133,36 @@ vector<double> arrayq(double qmin, double qmax, int nsteps){
     return v;
 }
 
-double minimum(vector<double> data){
+double searchMin(vector<double> Sq, vector<double> vettq){
+    cout<<"starting preliminary search of a Minimum\n";
+    int size=0;
+    if (vettq.size()!=Sq.size()) exit(-5);
+    else{ 
+//        cout<<"changing size for for-loop\n";
+        size=vettq.size();
+        cout<<"new size is : "<<size<<endl;
+    }
+    double min=0, sqmin=DBL_MAX;
+/*    cout<<"starting for-loop\n"
+        <<"value min : "<<min
+        <<"\nvalue sqmin : "<<sqmin<<endl;
+*/    for (int i=0; i<size; i++){
+//        cout<<"iteration : "<<i<<endl;
+        if(sqmin>Sq[i]){
+            sqmin=Sq[i];
+            min=vettq[i];    
+/*            cout<<"new value sqmin : "<<sqmin<<endl
+                <<"new position minimum : "<<vettq[i]<<endl;
+*/        }
+    }
+    cout<<"found possible minimum : "<<min<<endl;
+    return min;
+}
+
+double minimum(vector<double> data, double search){
     double min=0;
     for (auto x : data){
-        min += x/static_cast<double>(ki(x, 1.6021e-19));
+        min += x/static_cast<double>(ki(x, search));
     }
     return min/data.size();
 }
