@@ -32,7 +32,7 @@ int main(int argc, char**argv){
     
     char* filename=argv[1];//nome del file da cui recuperare i dati
     vector<double> Data=Read(filename);//caricamento dei dati nel vettore
-    vector<double> vettq=arrayq(1.40e-19, 1.70e-19, DIM);
+    vector<double> vettq=arrayq(1.5e-19, 1.70e-19, DIM);
     vector<double> SQ(Sq(Data, vettq, DIM));
     Print(Data, "Data");
 //    Print(vettq, "Vettq");
@@ -49,8 +49,9 @@ int main(int argc, char**argv){
     c1.cd();
     //creazione vettori dinamici per ROOTto
     TGraph* graph= new TGraph();
-    TF1* f1= new TF1("f1","[1]*(x-[0])^2+[2]", 1.55e-19, 1.65e-19);
+    TF1* f1= new TF1("f1","[1]*(x-[0])^2+[2]", 1.5e-19, 1.7e-19);
     f1->SetParameter(2, sqMinimum);
+    f1->SetParameter(1, 30);
     f1->SetParameter(0, min);
     for (int i=0; i<DIM; ++i ){
         graph->SetPoint(i, vettq[i], SQ[i]);
@@ -63,6 +64,11 @@ int main(int argc, char**argv){
     graph->SetTitle("Grafico S(q) con fit della parabola");
     graph->GetXaxis()->SetTitle("Q [C]");
     graph->GetYaxis()->SetTitle("S(Q) [C^2]");
+    TLegend legenda(.40, .9, .70, .7);
+    legenda.SetHeader("Legenda", "C");
+    legenda.AddEntry(graph, "S(q)", "l");
+    legenda.AddEntry(f1, "Fit Parabola tramite Root", "l");
+    legenda.Draw();
     c1.SaveAs("parabola.png");
     app.Run();
     delete [] graph;
