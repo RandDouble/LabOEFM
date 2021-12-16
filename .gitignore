@@ -1,6 +1,8 @@
 .vscode/
+salvataggio/
 *.exe
 *.png
 *.log
 prova.dat
 *.txt
+*.json
