@@ -14,8 +14,8 @@ z= lambda d , _Lambda, _Theta: np.pi*d/_Lambda*np.sin(_Theta)
 y= lambda m , z : (np.sin(m*z)/np.sin(z))**2
 for i in m:
     partY=z(d, _Lambda, x)
-#    partY2=alpha(a, _Lambda, x)
-    ax.plot(x,y(i,partY)"""*amp(partY2)""", label="nr Fenditure = "+str(i))
+#    partY2=alpha(a, _Lambda, x)"""*amp(partY2)"""
+    ax.plot(x,y(i,partY), label="nr Fenditure = "+str(i))
 ax.set_xlabel("Angolo [rad]")
 ax.set_ylabel("ampiezza")
 fig.tight_layout()
