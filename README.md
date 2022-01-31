@@ -14,7 +14,7 @@ How to use:
 
 ---
 
-## AngleCorrect 
+## AngleCorrect
 
 Used during reticule diffraction for correcting angle
 
@@ -25,6 +25,7 @@ How to use:
 ---
 
 ## Additional info
+
 ### Compilation Info
 
 - To Compile all the files use:
@@ -59,8 +60,3 @@ With this files there are included some test file
 To Test:
     `make angle`
     `make millikan`
-
-## To Do
-
-- [x]    correction for e/m experiment
-- [x]    correction for prism
