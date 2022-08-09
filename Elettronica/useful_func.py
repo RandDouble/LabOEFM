@@ -80,10 +80,18 @@ def Nyquist_Plot(filename : str,  theo : callable = None,  *args):
     ax.set_xlabel("Re(H)")
     ax.set_ylabel("Im(H)")
     ax.set_title("Nyquist Graph")
-    ax.grid(True, 'both')
     ax.axis('square')
+    ax.grid(True, 'both')
     ax.legend()
     return fig, ax
+
+def Plot_Collpits(filename : str):
+    df = pd.read_csv(filename, delimiter='  ', header=None)
+    plt.plot(df[0], df[1])
+    plt.grid('both', True)
+    plt.xlabel('Time [s]')
+    plt.ylabel('Voltage [V]')
+
 
 if __name__=='__main__':
     print('This is a test')
