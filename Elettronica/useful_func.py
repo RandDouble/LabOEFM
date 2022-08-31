@@ -1,8 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from basic_units import radians
-
 
 common_params = dict(
     marker = 'o',
@@ -37,7 +35,7 @@ def Bode_Plot(filename : str, th_gain : callable = None, th_phi : callable = Non
     
     # plotting phase
     c = next(colors)['color']
-    phase.plot(df['freq'], Phase(df['freq'], df['dt']), yunits = radians ,color=c, label = 'phase', **common_params)
+    phase.plot(df['freq'], Phase(df['freq'], df['dt']),color=c, label = 'phase', **common_params)
     if th_phi:
         c = next(colors)['color']
         x = np.logspace(np.log10(np.min(df['freq'])),np.log10(np.max(df['freq'])))
