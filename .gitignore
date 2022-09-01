@@ -7,3 +7,5 @@ prova.dat
 *.txt
 *.json
 /.git-old
+*.pdf
+*.svg
